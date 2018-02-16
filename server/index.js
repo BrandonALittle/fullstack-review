@@ -10,9 +10,6 @@ app.use(parse.json());
 
 app.post('/repos', function (req, res) {
   let user = req.body.term;
-  db.fetchRepos(user, function(results) {
-    console.log(results);
-    if (!results.length) {
       github.getReposByUsername(user, function(err, repos) {
         if (err) throw Error;
         repos = JSON.parse(repos);
@@ -24,19 +21,16 @@ app.post('/repos', function (req, res) {
             watchers: repo.watchers_count
           };
         });
-        db.save(mappedRepos);
-        res.sendStatus(201);
+        mappedRepos.forEach(function(repo) {
+          db.save(repo);
+        });
+        res.redirect('/repos');
       });
-    } else {
-      res.sendStatus(200);
-    }
-
   });
-});
 
 app.get('/repos', function (req, res) {
   db.fetchRepos(function(results) {
-    res.send(results.sort(0,25));
+    res.send(results.slice(0,25));
   });
 });
 

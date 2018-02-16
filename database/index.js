@@ -12,9 +12,9 @@ let repoSchema = mongoose.Schema({
 let Repo = mongoose.model('Repo', repoSchema);
 
 let save = (repoData) => {
-  Repo.find({'repoLink': repoData.repoLink}, function(err, docs) {
+  Repo.find(repoData, function(err, docs) {
     if (err) throw Error;
-    if (!docs.length) {
+    if (docs.length === 0) {
       Repo.create(repoData, function(err, newRepo) {
        if (err) throw Error;
       });
@@ -22,10 +22,10 @@ let save = (repoData) => {
   });
 }
 
-let fetchRepos = (user, callback) => {
-  Repo.find({'user':user}, function(err, docs) {
+let fetchRepos = (callback) => {
+  Repo.find({}, function(err, docs) {
     docs = docs.sort(function(a, b) {
-      return a.watchers - b.watchers;
+      return b.watchers - a.watchers;
     });
     callback(docs);
   });

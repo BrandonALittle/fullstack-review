@@ -22,7 +22,7 @@ class App extends React.Component {
       data: JSON.stringify({term: term}),
       success: function(data) {
         $.ajax({
-          url: `/repos/${term}`,
+          url: `/repos`,
           success: function(data) {
             console.log(data);
             context.setState({repos: data});
