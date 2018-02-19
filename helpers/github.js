@@ -10,8 +10,9 @@ let getReposByUsername = (user, callback) => {
       'Authorization': `token ${config.TOKEN}`
     },
   };
-  request(options, function(err, res, body = []) {
+  request(options, function(err, res, body) {
     if (err) throw Error;
+    if (!Array.isArray(body)) {body = JSON.stringify([])};
     callback(err, body);
   });
 
