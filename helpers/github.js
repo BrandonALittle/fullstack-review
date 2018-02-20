@@ -7,7 +7,7 @@ let getReposByUsername = (user, callback) => {
     url: searchUrl,
     headers: {
       'User-Agent': 'request',
-      'Authorization': process.env.TOKEN;
+      'Authorization': process.env.TOKEN
     },
   };
   request(options, function(err, res, body) {
