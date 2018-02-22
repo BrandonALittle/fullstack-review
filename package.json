@@ -8,6 +8,9 @@
     "server-dev": "nodemon --inspect server/index.js",
     "start": "node server/index.js"
   },
+  "engines": {
+    "node": "8.9.4"
+  },
   "author": "Beth Johnson",
   "license": "ISC",
   "devDependencies": {
